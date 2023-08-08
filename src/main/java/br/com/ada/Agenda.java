@@ -8,6 +8,27 @@ import java.util.List;
 public class Agenda {
     private List<Contato> contatos;
 
+    public Agenda() {
+        contatos = new ArrayList<>();
+    }
+
+    List<Contato> listarContatos(int pagina, int tamanhoPagina) {
+        List<Contato> listagem = new ArrayList<>();
+        int primeiroRegistro = tamanhoPagina * (pagina-1);
+        if (primeiroRegistro > contatos.size() -1) {
+            return listagem;
+        }
+        int ultimoRegistro = primeiroRegistro + tamanhoPagina;
+        if (contatos.size() < ultimoRegistro) {
+            ultimoRegistro = contatos.size();
+        }
+        for (int i = primeiroRegistro; i < ultimoRegistro; i++) {
+            Contato contato = contatos.get(i);
+            listagem.add(contato);
+        }
+        return listagem;
+    }
+
     void adicionarContato(Contato contato) {
         contatos.add(contato);
     }
