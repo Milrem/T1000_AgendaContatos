@@ -18,7 +18,7 @@ public class Main {
             agenda.adicionarContato(contato);
         }
 
-        BasicUI ui = new PagedListUI("Agenda de Contatos");
+        BasicUI ui = new PagedListUI("Agenda de Contatos", agenda);
         ui.show();
 
 //        System.out.println("Pagina 1");
