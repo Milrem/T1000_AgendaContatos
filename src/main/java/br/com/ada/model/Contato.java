@@ -38,4 +38,9 @@ public class Contato {
     public String getNomeCompleto() {
         return this.nome + " " + this.sobrenome;
     }
+
+    @Override
+    public String toString() {
+        return getNomeCompleto() + "[" + tipoContato + "]";
+    }
 }
