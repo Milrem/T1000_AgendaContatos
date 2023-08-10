@@ -3,12 +3,14 @@ package br.com.ada.ui;
 import br.com.ada.util.ConsoleUIHelper;
 
 public abstract class BasicUI {
+    protected static final int DEFAULT_COLUMNS = 120;
+    protected static final int DEFAULT_ROWS = 24;
     protected int colunas;
     protected int linhas;
     protected String titulo;
 
     public BasicUI(String titulo) {
-        this(120, 24, titulo);
+        this(DEFAULT_COLUMNS, DEFAULT_ROWS, titulo);
     }
 
     public BasicUI(int colunas, int linhas, String titulo) {
