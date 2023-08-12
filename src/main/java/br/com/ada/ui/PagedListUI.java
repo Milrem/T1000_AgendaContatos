@@ -3,6 +3,7 @@ package br.com.ada.ui;
 import br.com.ada.model.Contato;
 import br.com.ada.util.ConsoleUIHelper;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class PagedListUI extends BasicUI {
@@ -11,6 +12,7 @@ public class PagedListUI extends BasicUI {
     protected int curPage;
 
     protected PagedList pageSource;
+    private List<Contato> dataList;
 
     public PagedListUI(String titulo, PagedList pageSource) {
         this(DEFAULT_COLUMNS, DEFAULT_ROWS, titulo, pageSource);
@@ -25,11 +27,11 @@ public class PagedListUI extends BasicUI {
 
     @Override
     public int drawContent() {
-        List<Contato> dataList = pageSource.listarContatos(curPage, PAGE_SIZE);
-        dataList.forEach(System.out::println);
-//        for (int i = 0; i < dataList.size(); i++) {
-//            System.out.println(dataList.get(i));
-//        }
+        dataList = pageSource.listarContatos(curPage, PAGE_SIZE);
+        for (int i = 0; i < dataList.size(); i++) {
+            Contato contato = dataList.get(i);
+            ConsoleUIHelper.drawWithRightPadding(i + " -> " + contato.toString(), colunas, ' ');
+        }
         return dataList.size();
     }
 
@@ -72,6 +74,13 @@ public class PagedListUI extends BasicUI {
     }
 
     private void seeItem() {
+        int op = ConsoleUIHelper.askNumber("Informe o item a exibir").intValue();
+        if (op >= 0 && op < dataList.size()) {
+            System.out.println(dataList.get(op));
+        } else {
+            ConsoleUIHelper.showMessageAndWait("Item inválido, por favor informe um item válido!", 10);
+            ConsoleUIHelper.clearScreen();
+        }
     }
 
     private void addItem() {
