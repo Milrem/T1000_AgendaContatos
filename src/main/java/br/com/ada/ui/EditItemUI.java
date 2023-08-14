@@ -47,7 +47,7 @@ public abstract class EditItemUI<T> extends BasicUI {
             options[fillFieldsNames().length + 2] = "Sair";
         }
         for (int i = 0; i < fillFieldsNames().length; i++) {
-            options[i+1] = fillFieldsNames()[i];
+            options[i+1] = "Alterar " + fillFieldsNames()[i];
         }
         int option = ConsoleUIHelper.askChooseOption("Escolha uma opção", options);
         boolean keepShowing = true;
