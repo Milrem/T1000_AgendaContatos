@@ -25,7 +25,7 @@ public abstract class PagedListUI<T> extends BasicUI {
     @Override
     public int drawContent() {
         dataList = pageSource.listar(curPage, PAGE_SIZE);
-        if (dataList.isEmpty() && curPage > 0) {
+        if (dataList.isEmpty() && curPage > 1) {
             previousPage();
             dataList = pageSource.listar(curPage, PAGE_SIZE);
         }
@@ -93,7 +93,7 @@ public abstract class PagedListUI<T> extends BasicUI {
     }
 
     private void previousPage() {
-        if (curPage > 0) {
+        if (curPage > 1) {
             curPage--;
         }
     }
