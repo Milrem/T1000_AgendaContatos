@@ -1,24 +1,21 @@
 package br.com.ada.ui;
 
-import br.com.ada.model.Contato;
 import br.com.ada.util.ConsoleUIHelper;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-public class PagedListUI extends BasicUI {
+public abstract class PagedListUI<T> extends BasicUI {
 
     protected final int PAGE_SIZE;
+    protected final PagedList<T> pageSource;
     protected int curPage;
+    private List<T> dataList;
 
-    protected PagedList pageSource;
-    private List<Contato> dataList;
-
-    public PagedListUI(String titulo, PagedList pageSource) {
+    public PagedListUI(String titulo, PagedList<T> pageSource) {
         this(DEFAULT_COLUMNS, DEFAULT_ROWS, titulo, pageSource);
     }
 
-    public PagedListUI(int colunas, int linhas, String titulo, PagedList pageSource) {
+    public PagedListUI(int colunas, int linhas, String titulo, PagedList<T> pageSource) {
         super(colunas, linhas, titulo);
         PAGE_SIZE = linhas - 4;
         curPage = 1;
@@ -27,10 +24,14 @@ public class PagedListUI extends BasicUI {
 
     @Override
     public int drawContent() {
-        dataList = pageSource.listarContatos(curPage, PAGE_SIZE);
+        dataList = pageSource.listar(curPage, PAGE_SIZE);
+        if (dataList.isEmpty() && curPage > 0) {
+            previousPage();
+            dataList = pageSource.listar(curPage, PAGE_SIZE);
+        }
         for (int i = 0; i < dataList.size(); i++) {
-            Contato contato = dataList.get(i);
-            ConsoleUIHelper.drawWithRightPadding(i + " -> " + contato.toString(), colunas, ' ');
+            String text = dataList.get(i).toString();
+            ConsoleUIHelper.drawWithRightPadding(i + " -> " + text, colunas, ' ');
         }
         return dataList.size();
     }
@@ -73,25 +74,27 @@ public class PagedListUI extends BasicUI {
         return true;
     }
 
-    private void seeItem() {
+    protected void seeItem() {
         int op = ConsoleUIHelper.askNumber("Informe o item a exibir").intValue();
         if (op >= 0 && op < dataList.size()) {
-            System.out.println(dataList.get(op));
+            showItem(dataList.get(op));
         } else {
             ConsoleUIHelper.showMessageAndWait("Item inválido, por favor informe um item válido!", 10);
             ConsoleUIHelper.clearScreen();
         }
     }
 
-    private void addItem() {
+    protected abstract void showItem(T item);
 
-    }
+    protected abstract void addItem();
 
     private void nextPage() {
-
+        curPage++;
     }
 
     private void previousPage() {
-
+        if (curPage > 0) {
+            curPage--;
+        }
     }
 }
