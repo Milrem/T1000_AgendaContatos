@@ -4,7 +4,6 @@ import br.com.ada.enums.TipoContato;
 import br.com.ada.model.Contato;
 import br.com.ada.ui.AgendaUI;
 import br.com.ada.ui.BasicUI;
-import br.com.ada.ui.PagedListUI;
 
 public class Main {
     public static void main(String[] args) {
