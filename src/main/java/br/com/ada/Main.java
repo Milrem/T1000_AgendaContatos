@@ -2,10 +2,9 @@ package br.com.ada;
 
 import br.com.ada.enums.TipoContato;
 import br.com.ada.model.Contato;
+import br.com.ada.ui.AgendaUI;
 import br.com.ada.ui.BasicUI;
 import br.com.ada.ui.PagedListUI;
-
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,7 +17,7 @@ public class Main {
             agenda.adicionarContato(contato);
         }
 
-        BasicUI ui = new PagedListUI("Agenda de Contatos", agenda);
+        BasicUI ui = new AgendaUI(agenda);
         ui.show();
 
 //        System.out.println("Pagina 1");
