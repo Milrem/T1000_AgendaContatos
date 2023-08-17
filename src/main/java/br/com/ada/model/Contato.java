@@ -2,6 +2,8 @@ package br.com.ada.model;
 
 import br.com.ada.enums.TipoContato;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Contato {
@@ -11,6 +13,13 @@ public class Contato {
     private List<Endereco> enderecos;
 
     private TipoContato tipoContato;
+
+    public Contato() {
+        this.telefones = new ArrayList<>();
+        this.enderecos = new ArrayList<>();
+        this.tipoContato = TipoContato.PESSOAL;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -42,5 +51,21 @@ public class Contato {
     @Override
     public String toString() {
         return getNomeCompleto() + "[" + tipoContato + "]";
+    }
+    
+    public boolean add(Telefone telefone) {
+        return telefones.add(telefone);
+    }
+    
+    public boolean add(Endereco endereco) {
+        return enderecos.add(endereco);
+    }
+
+    public List<Telefone> getTelefones() {
+        return Collections.unmodifiableList(telefones);
+    }
+
+    public List<Endereco> getEnderecos() {
+        return Collections.unmodifiableList(enderecos);
     }
 }
