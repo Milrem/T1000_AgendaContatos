@@ -1,19 +1,22 @@
 package br.com.ada;
 
 import br.com.ada.model.Contato;
+import br.com.ada.service.AgendaService;
+import br.com.ada.ui.PagedList;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Agenda implements br.com.ada.ui.PagedList<Contato> {
-    private List<Contato> contatos;
+public class Agenda implements PagedList<Contato> {
+    private AgendaService agendaService;
 
     public Agenda() {
-        contatos = new ArrayList<>();
+        agendaService = AgendaService.getInstance();
     }
 
     @Override
     public List<Contato> listar(int pagina, int tamanhoPagina) {
+        List<Contato> contatos = agendaService.getContatoList();
         List<Contato> listagem = new ArrayList<>();
         int primeiroRegistro = tamanhoPagina * (pagina-1);
         if (primeiroRegistro > contatos.size() -1) {
@@ -31,24 +34,10 @@ public class Agenda implements br.com.ada.ui.PagedList<Contato> {
     }
 
     void adicionarContato(Contato contato) {
-        contatos.add(contato);
+        agendaService.add(contato);
     }
 
     void removerContato(Contato contato) {
-        contatos.remove(contato);
-    }
-
-    void duplicarContato(Contato contato) {
-
-    }
-
-    List<Contato> pesquisarContato(String nome) {
-        List<Contato> encontrados = new ArrayList<>();
-        for (Contato contato : contatos) {
-            if (contato.getNomeCompleto().toLowerCase().contains(nome.toLowerCase())) {
-                encontrados.add(contato);
-            }
-        }
-        return encontrados;
+        agendaService.del(contato);
     }
 }
